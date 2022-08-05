@@ -6,6 +6,6 @@ object P02 {
   def penultimateRecursive[A](l: List[A]): A = l match {
     case x::_::Nil => x
     case x::xs => penultimateRecursive(xs)
-    case _ => throw new NoSuchElementException("List.last")
+    case _ => throw new NoSuchElementException("penultimate NOT valid")
   }
 }
