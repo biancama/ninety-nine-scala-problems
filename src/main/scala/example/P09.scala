@@ -14,7 +14,7 @@ object P09 {
         val (take, drop) = ls.span(_ == x)
         packTailRecursive(drop, take::acc)
     }
-    packTailRecursive(ls, Nil)
+    packTailRecursive(ls, Nil).reverse
   }
 
 }
