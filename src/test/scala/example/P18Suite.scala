@@ -1,41 +1,34 @@
 package example
 
 import munit.FunSuite
+import P18._
+class P18Suite extends FunSuite {
 
-class P17Suite extends FunSuite {
+  test("Extract a slice from a list.") {
 
-  test("Split a list into two parts.") {
-
-    val obtained = P17.splitBuiltin(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
-    val expected = (List('a', 'b', 'c'), List('d', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
+    val obtained = sliceBuiltin(3, 7, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
+    val expected = List('d', 'e', 'f', 'g')
     assertEquals(obtained, expected)
   }
 
-  test("Split a list into two parts.(recursive)") {
+  test("Extract a slice from a list.(Recursive)") {
 
-    val obtained = P17.splitRecursive(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
-    val expected = (List('a', 'b', 'c'), List('d', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
+    val obtained = sliceRecursive(3, 7, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
+    val expected = List('d', 'e', 'f', 'g')
+    assertEquals(obtained, expected)
+  }
+  test("Extract a slice from a list.(TailRecursive)") {
+
+    val obtained = sliceTailRecursive(3, 7, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
+    val expected = List('d', 'e', 'f', 'g')
     assertEquals(obtained, expected)
   }
 
-  test("Split a list into two parts.(recursiveTail)") {
+  test("Extract a slice from a list.(functional)") {
 
-    val obtained = P17.splitRecursiveTail(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
-    val expected = (List('a', 'b', 'c'), List('d', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
+    val obtained = sliceFunctional(3, 7, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
+    val expected = List('d', 'e', 'f', 'g')
     assertEquals(obtained, expected)
   }
 
-  test("Split a list into two parts.(functional)") {
-
-    val obtained = P17.splitFunctional(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
-    val expected = (List('a', 'b', 'c'), List('d', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
-    assertEquals(obtained, expected)
-  }
-
-  test("Split a list into two parts.(functional)") {
-
-    val obtained = P17.splitFunctional(3, List('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
-    val expected = (List('a', 'b', 'c'), List('d', 'e', 'f', 'g', 'h', 'i', 'j', 'k'))
-    assertEquals(obtained, expected)
-  }
 }

@@ -1,44 +1,26 @@
 package example
 
+object P18 {
+  def sliceBuiltin[A](from: Int, until: Int, l: List[A]): List[A] = l.slice(from, until)
 
+  def sliceRecursive[A](from: Int, until: Int, l: List[A]): List[A] = (from, l) match
+    case (_, List()) => List()
+    case (n, _) if n >= until => List()
+    case (0, x::xs) => x::sliceRecursive(0, until - 1, xs)
+    case (_, _::xs) => sliceRecursive(from - 1, until -1, xs)
 
-object P17 {
-  def splitBuiltin[A](n: Int, l: List[A] ): (List[A], List[A]) = l.splitAt(n)
+  def sliceTailRecursive[A](from: Int, until: Int, l: List[A]): List[A] = {
 
-  def splitRecursiveTail[A](n: Int, l: List[A] ): (List[A], List[A]) = {
-    def splitRecursiveTail[A](n: Int, l: List[A], acc: (List[A], List[A])): (List[A], List[A]) = (n, l) match {
-      case (_, Nil) => acc
-      case (0, ll) =>
-        val (l, r) = acc
-        splitRecursiveTail(0, Nil, (l, r:::ll))
-      case (_, h:: tail) =>
-        val (l, r) = acc
-        splitRecursiveTail(n - 1, tail, (l :+ h, r))
+    def sliceTailRecursive[A](from: Int, until: Int, l: List[A], acc: List[A]): List[A] = (from, l) match
+      case (_, List()) => acc
+      case (n, _) if n >= until => acc
+      case (0, x :: xs) => sliceTailRecursive(0, until - 1, xs, x :: acc)
+      case (n, x :: xs) => sliceTailRecursive(from - 1, until - 1, xs, acc)
 
-    }
-    splitRecursiveTail[A](n, l, (Nil, Nil))
+    sliceTailRecursive(from, until, l, List()).reverse
   }
 
-  def splitRecursive[A](n: Int, l: List[A]): (List[A], List[A]) = (n , l) match {
-    case (_, Nil) => (Nil, Nil)
-    case (0, ll) => (Nil, ll)
-    case (n, h:: tail) =>
-      val (l, r) = splitRecursive(n -1, tail)
-      (h::l, r)
-  }
-
-  def splitFunctional[A](n: Int, l: List[A] ): (List[A], List[A]) = {
-    val it = l.foldRight((List[A](), List[A](), l.size - n)) {
-     (elem, z) => {
-       val (ll, rl, c) = z
-       if (c == 0) {
-         (elem :: ll, rl, 0)
-       } else {
-         (ll, elem :: rl, c - 1)
-       }
-     }
-   }
-    (it._1, it._2)
-  }
+  def sliceFunctional[A](from: Int, until: Int, l: List[A]): List[A] = l.drop(from).take(until - from)
 
 }
+
